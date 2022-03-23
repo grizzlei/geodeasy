@@ -1,0 +1,23 @@
+<?php
+
+require('../../lib/vincenty.php');
+header('Content-type: application/json');
+
+$lat1=$_GET["latitude1"];
+$lng1=$_GET["longitude1"];
+$lat2=$_GET["latitude2"];
+$lng2=$_GET["longitude2"];
+$a=$_GET["a"];
+$b=$_GET["b"];
+
+$azimuth = 0.;
+$reverse_azimuth = 0.;
+$distance = 0.;
+
+vincenty_inverse(deg2rad($lat1), deg2rad($lng1), deg2rad($lat2), deg2rad($lng2),$a, $b, $azimuth, $reverse_azimuth, $distance);
+
+$response->great_circle_distance->azimuth = (float)number_format(rad2deg($azimuth),8);
+$response->great_circle_distance->reverse_azimuth = (float)number_format(rad2deg($reverse_azimuth),8);
+$response->great_circle_distance->distance = $distance;
+
+print(json_encode($response, JSON_PRETTY_PRINT));
