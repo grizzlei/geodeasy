@@ -1,17 +1,16 @@
 <?php
-$base_url="geodeasy.hasankaraman.dev"
+$base_url="localhost:53000"
 ?>
 <html>
     <title>GeodEasy</title>
-    <body style="width:40%">
     <h3>GeodEasy</h3>
 <pre>
 <a href="https://hasankaraman.dev/whoami">hasan karaman</a> - <a href="mailto:hk@hasankaraman.dev">hk@hasankaraman.dev</a> - 2022
-<hr>
+------------------------------------------
 
 Geodeasy is an open source tool for a set of basic and complicated geodetic
-computations. Although all of its code is available, you can still use the
-REST API instead.
+computations. Although all of its code is available, you can still use its
+public REST API instead.
 
 Geodeasy available tools:
 
@@ -26,12 +25,17 @@ Geodeasy public APIs:
 
 All APIs and their example use are documented <a href="#">here</a>.
 
-https://<?php print($base_url) ?>/api/v1/destination.php
-https://<?php print($base_url) ?>/api/v1/greatCircleDistance.php
-https://<?php print($base_url) ?>/api/v1/conversions/geoToXYZ.php
-https://<?php print($base_url) ?>/api/v1/conversions/geoToUTM.php
-https://<?php print($base_url) ?>/api/v1/conversions/geoToTM.php
-https://<?php print($base_url) ?>/api/v1/conversions/geoToLCC.php
+[<a href="http://<?php print($base_url) ?>/api/v1/destination.php?latitude=35.123&longitude=41.1235&distance=12413&azimuth=22&a=6378137.0&b=6356752.314245"
+target="_blank">Try</a>] /api/v1/destination.php
+[<a href="http://<?php print($base_url) ?>/api/v1/great_circle_distance.php?latitude1=41.085136&longitude1=29.006844&latitude2=-44.9581658&longitude2=34.1099889&a=6378137.0&b=6356752.314245"
+target="_blank">Try</a>] /api/v1/great_circle_distance.php
+[<a href="http://<?php print($base_url) ?>/api/v1/geo_to_xyz.php?latitude=35.123&longitude=41.1235&height=100&a=6378137.0&b=6356752.314245"
+target="_blank">Try</a>] /api/v1/conversions/geo_to_xyz.php
+[<a href="http://<?php print($base_url) ?>/api/v1/xyz_to_geo.php?x=3934204.2181574507&y=3434867.698830731&z=3649094.041811154&a=6378137.0&b=6356752.314245"
+target="_blank">Try</a>] /api/v1/conversions/xyz_to_geo.php
+[<a>Try</a>] /api/v1/conversions/geo_to_utm.php
+[<a>Try</a>] /api/v1/conversions/geo_to_tm.php
+[<a>Try</a>] /api/v1/conversions/geo_to_lcc.php
 
 MIT License
 
