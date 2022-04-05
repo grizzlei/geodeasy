@@ -16,8 +16,10 @@
 function vincenty_direct(
     $lat1, $lng1, $dist, $azimuth1,
     $a, $b,
-    &$lat2, &$lng2, &$azimuth2)
+    &$lat2, &$lng2, &$azimuth2) : int
 {
+    if(($lat1 > M_PI || $lng1 > M_PI) || ($lat1 < -M_PI || $lng1 > M_PI))
+        return 1;   
     // flattening
     $f = ($a - $b) / $a; 
     // reduced latitude of first point
@@ -89,6 +91,7 @@ function vincenty_direct(
     $lng2 = $lng1 + $L; 
     // azimuth at destination point
     $azimuth2 = atan2($sin_alpha, -sin($U1) * sin($sigma) + cos($U1) * cos($sigma) * cos($azimuth1));
+    return 0;
 }
 
 /** vincenty inverse 
@@ -109,8 +112,11 @@ function vincenty_inverse(
     $lat1, $lng1,
     $lat2, $lng2,
     $a, $b,
-    &$azimuth, &$reverse_azimuth, &$dist)
+    &$azimuth, &$reverse_azimuth, &$dist) : int
 {
+    if(($lat1 > M_PI || $lng1 > M_PI) || ($lat1 < -M_PI || $lng1 > M_PI)
+        || ($lat2 > M_PI || $lng2 > M_PI) || ($lat2 < -M_PI || $lng2 > M_PI))
+        return 1;
     // flattening
     $f = ($a - $b) / $a; 
     // reduced latitude of first point  
@@ -151,7 +157,7 @@ function vincenty_inverse(
         );
 
         if($lambda > M_PI)
-            return;
+            return 2;
 
         $diff = $lambda - $diff;
     }
@@ -184,4 +190,5 @@ function vincenty_inverse(
     $azimuth = atan2(cos($U2) * sin($lambda), cos($U1) * sin($U2) - sin($U1) * cos($U2) * cos($lambda));
     $reverse_azimuth = atan2(cos($U1) * sin($lambda), -sin($U1) * cos($U2) + cos($U1) * sin($U2) * cos($lambda));
     $reverse_azimuth = $reverse_azimuth < M_PI ? $reverse_azimuth + M_PI : M_PI - $reverse_azimuth;
+    return 0;
 }
