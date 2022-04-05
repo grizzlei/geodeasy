@@ -12,24 +12,24 @@ $api_utm_to_geo="/api/v1/utm_to_geographic.php?easting=693497.58&northing=388874
 <body style="width:25%; font-family:Helvetica; font-size:12px;">
     
     <h3>GeodEasy</h3>
-<a href="https://hasankaraman.dev/whoami">hasan karaman</a> - <a href="mailto:hk@hasankaraman.dev">hk@hasankaraman.dev</a> - 2022 <br>
-<a href="https://github.com/grizzlei/geodeasy">github.com/grizzlei/geodeasy</a>
+<a href="https://hasankaraman.dev/whoami">hasan karaman (whoami)</a> - <a href="mailto:hk@hasankaraman.dev">hk@hasankaraman.dev</a> - 2022 
 <hr>
-
+<h3> Intro </h3>
 Geodeasy is an open source tool for a set of basic and complicated geodetic
 computations. Although all of its code is available, you can still use its
 public REST API instead.
 <p>
 Geodeasy available tools:<br><br>
 
-<a href="#">Destination Calculation</a><br>
-<a href="#">Great Circle Distance Calculation</a><br>
-<a href="#">Lat/Lon to XYZ (ECEF) Conversions</a><br>
-<a href="#">Geographic - Universal Transverse Mercator Conversions</a><br>
-<a href="#">Geographic - Transverse Mercator Conversions</a><br>
-<a href="#">Geographic - Lambert Conformal Conic Conversions</a>
+<a href="#">Destination calculation on ellipsoid</a><br>
+<a href="#">Great circle distance calculation on ellipsoid</a><br>
+<a href="#">Geographic - Cartesian (earth-centered, earth-fixed) conversions on ellipsoid</a><br>
+<a href="#">Geographic - Universal Transverse Mercator conversions on ellipsoid</a><br>
+<a href="#">Geographic - Transverse Mercator conversions on ellipsoid</a><br>
+<a href="#">Geographic - Lambert Conformal Conic conversions on ellipsoid</a>
 
 <hr>
+<h3> API documentation and examples </h3>
 Try out Geodeasy public REST API:<br>
 <p>
 [<a href="http://<?php print($base_url.$api_destination) ?>"
@@ -37,20 +37,22 @@ target="_blank">Try</a>] /api/v1/destination.php<br>
 [<a href="http://<?php print($base_url.$api_great_circle_distance) ?>"
 target="_blank">Try</a>] /api/v1/great_circle_distance.php<br>
 [<a href="http://<?php print($base_url.$api_geo_to_xyz) ?>"
-target="_blank">Try</a>] /api/v1/conversions/geo_to_xyz.php<br>
+target="_blank">Try</a>] /api/v1/geo_to_xyz.php<br>
 [<a href="http://<?php print($base_url.$api_xyz_to_geo) ?>"
-target="_blank">Try</a>] /api/v1/conversions/xyz_to_geo.php<br>
+target="_blank">Try</a>] /api/v1/xyz_to_geo.php<br>
 [<a href="http://<?php print($base_url.$api_geo_to_utm) ?>"
-target="_blank">Try</a>] /api/v1/conversions/geographic_to_utm.php<br>
+target="_blank">Try</a>] /api/v1/geographic_to_utm.php<br>
 [<a href="http://<?php print($base_url.$api_utm_to_geo) ?>"
-target="_blank">Try</a>] /api/v1/conversions/utm_to_geographic.php<br>
-[<a>Try</a>] /api/v1/conversions/geographic_to_tm.php<br>
-[<a>Try</a>] /api/v1/conversions/tm_to_geographic.php<br>
-[<a>Try</a>] /api/v1/conversions/geographic_to_lcc.php<br>
-[<a>Try</a>] /api/v1/conversions/lcc_to_geographic.php
+target="_blank">Try</a>] /api/v1/utm_to_geographic.php<br>
+[<a>Try</a>] /api/v1/geographic_to_tm.php<br>
+[<a>Try</a>] /api/v1/tm_to_geographic.php<br>
+[<a>Try</a>] /api/v1/geographic_to_lcc.php<br>
+[<a>Try</a>] /api/v1/lcc_to_geographic.php
 <p>
 All API calls and their example use are documented <a href="#">here</a>.
 <hr>
+<h3> Source & License </h3>
+You can find GeodEasy source code here: <a href="https://github.com/grizzlei/geodeasy">github.com/grizzlei/geodeasy</a>
 <p>
 MIT License
 <p>
