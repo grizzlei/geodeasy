@@ -11,15 +11,15 @@ $api_utm_to_geo="/api/v1/utm_to_geographic.php?easting=693497.58&northing=388874
     <title>GeodEasy</title>
 <body style="width:25%; font-family:Helvetica; font-size:12px;">
     
-    <h3>GeodEasy</h3>
-<a href="https://hasankaraman.dev/whoami">hasan karaman (whoami)</a> - <a href="mailto:hk@hasankaraman.dev">hk@hasankaraman.dev</a> - 2022 
-<hr>
+<h3>GeodEasy</h3>
+<a href="https://geodeasy.org">Website (geodeasy.org)</a> 
+<p>
 <h3> Intro </h3>
 Geodeasy is an open source tool for a set of basic and complicated geodetic
 computations. Although all of its code is available, you can still use its
 public REST API instead.
 <p>
-Geodeasy available tools:<br><br>
+Geodeasy available online tools: (coming soon)<p>
 
 <a href="#">Destination calculation on ellipsoid</a><br>
 <a href="#">Great circle distance calculation on ellipsoid</a><br>
@@ -32,27 +32,27 @@ Geodeasy available tools:<br><br>
 <h3> API documentation and examples </h3>
 Try out Geodeasy public REST API:<br>
 <p>
-[<a href="http://<?php print($base_url.$api_destination) ?>"
+[<a href="https://<?php print($base_url.$api_destination) ?>"
 target="_blank">Try</a>] /api/v1/destination.php<br>
-[<a href="http://<?php print($base_url.$api_great_circle_distance) ?>"
+[<a href="https://<?php print($base_url.$api_great_circle_distance) ?>"
 target="_blank">Try</a>] /api/v1/great_circle_distance.php<br>
-[<a href="http://<?php print($base_url.$api_geo_to_xyz) ?>"
+[<a href="https://<?php print($base_url.$api_geo_to_xyz) ?>"
 target="_blank">Try</a>] /api/v1/geo_to_xyz.php<br>
-[<a href="http://<?php print($base_url.$api_xyz_to_geo) ?>"
+[<a href="https://<?php print($base_url.$api_xyz_to_geo) ?>"
 target="_blank">Try</a>] /api/v1/xyz_to_geo.php<br>
-[<a href="http://<?php print($base_url.$api_geo_to_utm) ?>"
+[<a href="https://<?php print($base_url.$api_geo_to_utm) ?>"
 target="_blank">Try</a>] /api/v1/geographic_to_utm.php<br>
-[<a href="http://<?php print($base_url.$api_utm_to_geo) ?>"
+[<a href="https://<?php print($base_url.$api_utm_to_geo) ?>"
 target="_blank">Try</a>] /api/v1/utm_to_geographic.php<br>
 [<a>Try</a>] /api/v1/geographic_to_tm.php<br>
 [<a>Try</a>] /api/v1/tm_to_geographic.php<br>
 [<a>Try</a>] /api/v1/geographic_to_lcc.php<br>
 [<a>Try</a>] /api/v1/lcc_to_geographic.php
 <p>
-All API calls and their example use are documented <a href="#">here</a>.
+All API calls and their example use are documented <a href="#">here</a> (coming soon).
 <hr>
 <h3> Source & License </h3>
-You can find GeodEasy source code here: <a href="https://github.com/grizzlei/geodeasy">github.com/grizzlei/geodeasy</a>
+You can find Geodeasy source code here: <a href="https://github.com/grizzlei/geodeasy">github.com/grizzlei/geodeasy</a>
 <p>
 MIT License
 <p>
@@ -78,5 +78,8 @@ SOFTWARE.
 <p>
 This is a licence-free software, it can be used by anyone who try to build a 
 better world.
+<hr>
+<a href="https://hasankaraman.dev/whoami">hasan karaman (whoami)</a> - <a href="https://hasankaraman.dev">https://hasankaraman.dev</a> - <a href="mailto:hk@hasankaraman.dev">hk@hasankaraman.dev</a> - 2022 
+
     </body>
 </html>
