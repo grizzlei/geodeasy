@@ -25,8 +25,8 @@ Try out Geodeasy public REST API:
 
 \[[Try](https://geodeasy.org/api/v1/destination.php?latitude=35.123&longitude=41.1235&distance=12413&azimuth=22&a=6378137.0&b=6356752.314245)\] /api/v1/destination.php  
 \[[Try](https://geodeasy.org/api/v1/great_circle_distance.php?latitude1=41.085136&longitude1=29.006844&latitude2=-44.9581658&longitude2=34.1099889&a=6378137.0&b=6356752.314245)\] /api/v1/great\_circle\_distance.php  
-\[[Try](https://geodeasy.org/api/v1/geographic_to_xyz.php?latitude=35.123&longitude=41.1235&height=100&a=6378137.0&b=6356752.314245)\] /api/v1/geo\_to\_xyz.php  
-\[[Try](https://geodeasy.org/api/v1/xyz_to_geographic.php?x=3934204.2181574507&y=3434867.698830731&z=3649094.041811154&a=6378137.0&b=6356752.314245)\] /api/v1/xyz\_to\_geo.php  
+\[[Try](https://geodeasy.org/api/v1/geographic_to_xyz.php?latitude=35.123&longitude=41.1235&height=100&a=6378137.0&b=6356752.314245)\] /api/v1/geographic\_to\_xyz.php  
+\[[Try](https://geodeasy.org/api/v1/xyz_to_geographic.php?x=3934204.2181574507&y=3434867.698830731&z=3649094.041811154&a=6378137.0&b=6356752.314245)\] /api/v1/xyz\_to\_geographic.php  
 \[[Try](https://geodeasy.org/api/v1/geographic_to_utm.php?latitude=35.123&longitude=41.1235&a=6378137.0&b=6356752.314245)\] /api/v1/geographic\_to\_utm.php  
 \[[Try](https://geodeasy.org/api/v1/utm_to_geographic.php?easting=693497.58&northing=3888747&utm_zone=37&hemisphere=N&a=6378137.0&b=6356752.314245)\] /api/v1/utm\_to\_geographic.php  
 \[Try\] /api/v1/geographic\_to\_tm.php  
