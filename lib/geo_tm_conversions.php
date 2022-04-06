@@ -1,14 +1,33 @@
 <?php
 
+require('error.php');
+require('constants.php');
 
-function geographic_to_transverse_mercator(
-    $latitude, $longitude, $origin_latitude, 
-    $origin_longitude, $false_easting, $false_northing,
-    $k0,
-    $a, $b, &$easting, &$northing) : int
+/**
+ * latitude: latitude of the point
+ * longitude: longitude of the point
+ * latitude0: origin latitude
+ * longitude0: center meridian
+ * E0: false easting
+ * N0: false northing
+ * k0: scale factor at origin
+ * a: semi-major axis of the ellipsoid 
+ * b: semi-minor axis of the ellipsoid
+ * easting: computed easting of the point
+ * northing: computed northing of the point
+ */
+function geographic_to_transverse_mercator($latitude, $longitude, $latitude0, $longitude0, $E0, $N0, $k0, $a, $b, &$easting, &$northing) : int
 {
-    if(($latitude > M_PI || $longitude > M_PI) || ($latitude < -M_PI || $longitude > M_PI))
-        return 1; // latitude longitude error (convert to radian)    
+    if(
+        $latitude > GDS_TRANMERC_MAX_LATITUDE || 
+        $longitude > GDS_COMMON_MAX_LONGITUDE || 
+        $latitude < -GDS_TRANMERC_MAX_LATITUDE || 
+        $longitude < -GDS_COMMON_MAX_LONGITUDE
+      )
+        return GoedeasyError::LatitudeLongitudeError;  
+
+    if($latitude0 < -GDS_TRANMERC_MAX_ORIGIN_LATITUDE || $latitude0 > GDS_TRANMERC_MAX_ORIGIN_LATITUDE)
+        return GoedeasyError::TransverseMercatorMaxOriginLatitudeError;
 
     $e_square = (pow($a,2) - pow($b,2)) / pow($a,2);
 
@@ -18,13 +37,13 @@ function geographic_to_transverse_mercator(
     $A6 = 35/3072 * pow($e_square,3);
 
     $m = $a * ($A0 * $latitude - $A2 * sin(2 * $latitude) + $A4 * sin(4 * $latitude) - $A6 * sin(6 * $latitude));
-    $m0 = $a * ($A0 * $origin_latitude - $A2 * sin(2 * $origin_latitude) + $A4 * sin(4 * $origin_latitude) - $A6 * sin(6 * $origin_latitude));
+    $m0 = $a * ($A0 * $latitude0 - $A2 * sin(2 * $latitude0) + $A4 * sin(4 * $latitude0) - $A6 * sin(6 * $latitude0));
 
     $rho = $a * (1 - $e_square) / pow((1 - $e_square * pow(sin($latitude),2)),3/2);
     $ups = $a / sqrt(1 - $e_square * pow(sin($latitude),2));
     $psi = $ups / $rho;
     $t = tan($latitude);
-    $omg = $longitude - $origin_longitude;
+    $omg = $longitude - $longitude0;
     
     $k1 = pow($omg, 2) / 2 * $ups * sin($latitude) * cos($latitude);
     $k2 = pow($omg, 4) / 24 * $ups * sin($latitude) * pow(cos($latitude),3) * (4 * pow($psi, 2) + $psi - pow($t, 2));
@@ -38,7 +57,7 @@ function geographic_to_transverse_mercator(
         1385 - 3111 * pow($t, 2) + 543 * pow($t, 4) - pow($t, 6)
     );
 
-    $northing = $false_northing + $k0 * (
+    $northing = $N0 + $k0 * (
         $m - $m0 + $k1 + $k2 + $k3 + $k4
     );
 
@@ -50,26 +69,28 @@ function geographic_to_transverse_mercator(
         61 - 479 * pow($t, 2) + 179 * pow($t, 4) - pow($t, 6)
     );
 
-    $easting = $false_easting + $k0 * $ups * $omg * cos($latitude) * (
+    $easting = $E0 + $k0 * $ups * $omg * cos($latitude) * (
         1 + $p1 + $p2 + $p3
     );
 
-    return 0;
+    return GoedeasyError::NoError;
 }
 
+/**
+ * easting: easting of the point
+ * northing: northing of the point
+ * latitude0: origin latitude
+ * longitude0: center meridian
+ * E0: false easting
+ * N0: false northing
+ * k0: scale factor at origin
+ * a: semi-major axis of the ellipsoid 
+ * b: semi-minor axis of the ellipsoid
+ * latitude: computed latitude of the point
+ * longitude: computed longitude of the point
+ */
 function transverse_mercator_to_geographic($easting, $northing, $latitude0, $longitude0, $E0, $N0, $k0, $a, $b, &$latitude, &$longitude) : int 
 {
-    // $latitude0 = .0;
-    // $longitude0 = $utm_zone * 6 - 3 - 180; 
-    // $E0 = 500000.;
-    // $N0 = 0.;
-    // // $N0 = $hemisphere == 'S' ? 10000000 : 0;
-    // if($hemisphere == 'N')
-    //     $N0 = 0;
-    // else if($hemisphere == 'S') {
-    //     $N0 = 10000000;
-    // }
-
     $e_square = (pow($a,2) - pow($b,2)) / pow($a,2);
 
     $A0 = 1 - $e_square/4 - 3 * pow($e_square, 2) / 64 - 5 * pow($e_square, 3) / 256;
@@ -77,7 +98,6 @@ function transverse_mercator_to_geographic($easting, $northing, $latitude0, $lon
     $A4 = 15/256 * (pow($e_square,2) + 3/4 * pow($e_square,3));
     $A6 = 35/3072 * pow($e_square,3);
 
-    // $m = $a * ($A0 * $latitude - $A2 * sin(2 * $latitude) + $A4 * sin(4 * $latitude) - $A6 * sin(6 * $latitude));
     $m0 = $a * ($A0 * $latitude0 - $A2 * sin(2 * $latitude0) + $A4 * sin(4 * $latitude0) - $A6 * sin(6 * $latitude0));
 
     $N_ = $northing - $N0;
@@ -112,10 +132,6 @@ function transverse_mercator_to_geographic($easting, $northing, $latitude0, $lon
 
     $latitude = $phi_ - $t1 + $t2 - $t3 + $t4;
 
-    // $rho = $a * (1 - $e_square) / pow((1 - $e_square * pow(sin($latitude),2)),3/2);
-    // $ups = $a / sqrt(1 - $e_square * pow(sin($latitude),2));
-    // $psi = $ups / $rho;
-
     $p1 = $x / cos($phi_);
     $p2 = pow($x,3) / (cos($phi_) * 6) * ($psi_ + 2 * pow($t_, 2));
     $p3 = pow($x,5) / (cos($phi_) * 120) * (-4 * pow($psi_,3) * (1 - 6 * pow($t_,2)) + pow($psi_,2) * (9 - 67 * pow($t_, 2)) 
@@ -123,5 +139,5 @@ function transverse_mercator_to_geographic($easting, $northing, $latitude0, $lon
     $p4 = pow($x,7) / (cos($phi_) * 5040) * (61 + 662 * pow($t_, 2) + 1320 * pow($t_,4) + 720 * pow($t_, 6));
 
     $longitude = $longitude0 + $p1 - $p2 + $p3 - $p4;
-    return 0;
+    return GoedeasyError::NoError;
 }

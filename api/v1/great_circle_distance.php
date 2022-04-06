@@ -1,6 +1,5 @@
 <?php
 
-require('../../lib/error.php');
 require('../../lib/vincenty.php');
 header('Content-type: application/json');
 

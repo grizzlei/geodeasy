@@ -1,5 +1,8 @@
 <?php
 
+require('error.php');
+require('constants.php');
+
 /** vincenty direct
  * 
  * computes a destination point on an ellipsoid 
@@ -12,14 +15,24 @@
  * outputs: 
  * latitude and longitude of the destination point
  * and the azimuth of the geodesic at the destination.
+ * 
+ * lat1: latitude of the first point
+ * lng1: longitude of the first point
+ * dist: distance on ellipsoid surface
+ * azimuth1: azimuth at the first point
+ * a: semi-major axis of the ellipsoid
+ * b: semi-minor axis of the ellipsoid
+ * lat2: computed latitude of the destination point
+ * lng2: computed longitude of the destination point
+ * azimuth2: computed azimuth at the destination point along the same geodesic
  */
-function vincenty_direct(
-    $lat1, $lng1, $dist, $azimuth1,
-    $a, $b,
-    &$lat2, &$lng2, &$azimuth2) : int
+function vincenty_direct($lat1, $lng1, $dist, $azimuth1, $a, $b, &$lat2, &$lng2, &$azimuth2) : int
 {
-    if(($lat1 > M_PI || $lng1 > M_PI) || ($lat1 < -M_PI || $lng1 > M_PI))
-        return 1;   
+    if(
+        $lat1 > GDS_COMMON_MAX_LATITUDE || $lng1 > GDS_COMMON_MAX_LONGITUDE || 
+        $lat1 < -GDS_COMMON_MAX_LATITUDE || $lng1 < -GDS_COMMON_MAX_LONGITUDE
+      )
+        return GoedeasyError::LatitudeLongitudeError;   
     // flattening
     $f = ($a - $b) / $a; 
     // reduced latitude of first point
@@ -91,7 +104,8 @@ function vincenty_direct(
     $lng2 = $lng1 + $L; 
     // azimuth at destination point
     $azimuth2 = atan2($sin_alpha, -sin($U1) * sin($sigma) + cos($U1) * cos($sigma) * cos($azimuth1));
-    return 0;
+    
+    return GoedeasyError::NoError;
 }
 
 /** vincenty inverse 
@@ -106,17 +120,28 @@ function vincenty_direct(
  * length of the geodesic (great circle distance) between these
  * two points, azimuth of the geodesic at the first point, reverse
  * azimuth of the geodesic at the second point.
+ * 
+ * lat1: latitude of the first point
+ * lng1: longitude of the first point
+ * lat2: latitude of the destination point
+ * lng2: longitude of the destination point
+ * a: semi-major axis of the ellipsoid
+ * b: semi-minor axis of the ellipsoid
+ * azimuth: computed azimuth at the first point towards second point
+ * reverse_azimuth: computed reverse azimuth at the destination point towards first point
+ * dist: computed distance on ellipsoid surface
 */
 
-function vincenty_inverse(
-    $lat1, $lng1,
-    $lat2, $lng2,
-    $a, $b,
-    &$azimuth, &$reverse_azimuth, &$dist) : int
+function vincenty_inverse($lat1, $lng1, $lat2, $lng2, $a, $b, &$azimuth, &$reverse_azimuth, &$dist) : int
 {
-    if(($lat1 > M_PI || $lng1 > M_PI) || ($lat1 < -M_PI || $lng1 > M_PI)
-        || ($lat2 > M_PI || $lng2 > M_PI) || ($lat2 < -M_PI || $lng2 > M_PI))
-        return 1;
+    if(
+        $lat1 > GDS_COMMON_MAX_LATITUDE || $lng1 > GDS_COMMON_MAX_LONGITUDE || 
+        $lat1 < -GDS_COMMON_MAX_LATITUDE || $lng1 < -GDS_COMMON_MAX_LONGITUDE || 
+        $lat2 > GDS_COMMON_MAX_LATITUDE || $lng2 > GDS_COMMON_MAX_LONGITUDE ||
+        $lat2 < -GDS_COMMON_MAX_LATITUDE || $lng2 < -GDS_COMMON_MAX_LONGITUDE
+      )
+        return GoedeasyError::LatitudeLongitudeError;
+
     // flattening
     $f = ($a - $b) / $a; 
     // reduced latitude of first point  
@@ -156,8 +181,8 @@ function vincenty_inverse(
             )
         );
 
-        if($lambda > M_PI)
-            return 2;
+        if(abs($lambda) > M_PI)
+            return GoedeasyError::VincentyConvergeError;
 
         $diff = $lambda - $diff;
     }
@@ -190,5 +215,5 @@ function vincenty_inverse(
     $azimuth = atan2(cos($U2) * sin($lambda), cos($U1) * sin($U2) - sin($U1) * cos($U2) * cos($lambda));
     $reverse_azimuth = atan2(cos($U1) * sin($lambda), -sin($U1) * cos($U2) + cos($U1) * sin($U2) * cos($lambda));
     $reverse_azimuth = $reverse_azimuth < M_PI ? $reverse_azimuth + M_PI : M_PI - $reverse_azimuth;
-    return 0;
+    return GoedeasyError::NoError;
 }

@@ -1,6 +1,5 @@
 <?php
 
-require('../../lib/error.php');
 require('../../lib/geo_tm_conversions.php');
 header('Content-type: application/json');
 
@@ -8,9 +7,6 @@ ini_set('serialize_precision', 8);
 
 $lat=$_GET["latitude"];
 $lng=$_GET["longitude"];
-
-$a=6378137.0;
-$b=6356752.314245;
 $a=$_GET["a"];
 $b=$_GET["b"];
 
@@ -20,9 +16,9 @@ $northing = .0;
 $lat0 = 0.0;
 $utm_zone = ceil(($lng + 180.0) / 6);
 $lng0 = $utm_zone * 6 - 3 - 180; 
-$E0 = 500000;
-$N0 = $lng < 0 ? 10000000 : 0;
-$k0 = 0.9996;
+$E0 = GDS_TRANMERC_FALSE_EASTING;
+$N0 = $lat < 0 ? GDS_TRANMERC_FALSE_NORTHING : 0;
+$k0 = GDS_UTM_SCALE_FACTOR;
 
 $err = geographic_to_transverse_mercator(deg2rad($lat), deg2rad($lng), deg2rad($lat0), deg2rad($lng0), $E0, $N0, $k0, $a, $b, $easting, $northing);
 

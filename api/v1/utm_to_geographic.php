@@ -1,14 +1,10 @@
 <?php
 
-require('../../lib/error.php');
 require('../../lib/geo_tm_conversions.php');
 header('Content-type: application/json');
 
 ini_set('serialize_precision', 8);
 
-
-// $a=6378137.0;
-// $b=6356752.314245;
 $a=$_GET["a"];
 $b=$_GET["b"];
 $easting=$_GET["easting"];
@@ -18,22 +14,17 @@ $hemisphere=$_GET["hemisphere"];
 
 $latitude=.0;
 $longitude=.0;
-// $easting=693497.58;
-// $northing=3888747;
-// $utm_zone=37;
-// $hemisphere='N';
-$k0 = 0.9996;
-
+$k0 = GDS_UTM_SCALE_FACTOR;
 
 $origin_latitude = .0;
 $origin_longitude = $utm_zone * 6 - 3 - 180; 
-$false_easting = 500000.;
+$false_easting = GDS_TRANMERC_FALSE_EASTING;
 $false_northing = 0.;
 
 if($hemisphere == 'N')
     $false_northing = 0;
 else if($hemisphere == 'S')
-    $false_northing = 10000000;
+    $false_northing = GDS_TRANMERC_FALSE_NORTHING;
 
 $err = transverse_mercator_to_geographic($easting, $northing, deg2rad($origin_latitude), deg2rad($origin_longitude), $false_easting, $false_northing, $k0, $a, $b, $latitude, $longitude);
 

@@ -1,10 +1,26 @@
 <?php
 
-function geographic_to_xyz($latitude, $longitude, $height,
-                  $a, $b, &$x, &$y, &$z): int
+require('error.php');
+require('constants.php');
+
+/**
+ * latitude: latitude of the point
+ * longitude: longitude of the point
+ * height: ellipsoidal height of the point
+ * a: semi-major axis of the ellipsoid
+ * b: semi-minor axis of the ellipsoid
+ * x: computed x coordinate of the point
+ * y: computed y coordinate of the point
+ * z: computed z coordinate of the point
+ */
+function geographic_to_xyz($latitude, $longitude, $height, $a, $b, &$x, &$y, &$z): int
 {
-    if(($latitude > M_PI || $longitude > M_PI) || ($latitude < -M_PI || $longitude > M_PI))
-        return 1; // latitude longitude error (convert to radian)    
+    if(
+        $latitude > GDS_COMMON_MAX_LATITUDE || $longitude > GDS_COMMON_MAX_LONGITUDE || 
+        $latitude < -GDS_COMMON_MAX_LATITUDE || $longitude < -GDS_COMMON_MAX_LONGITUDE
+      )
+        return GoedeasyError::LatitudeLongitudeError; 
+        
     $eu_square = ($a * $a - $b * $b) / ($b * $b);
     $c = $a * $a / $b;
     $v1 = sqrt(1 + ($eu_square * (cos($latitude) * cos($latitude))));
@@ -16,6 +32,16 @@ function geographic_to_xyz($latitude, $longitude, $height,
     return 0;
 }
 
+/**
+ * x: x coordinate of the point
+ * y: y coordinate of the point
+ * z: z coordinate of the point
+ * a: semi-major axis of the ellipsoid
+ * b: semi-minor axis of the ellipsoid
+ * latitude: computed latitude of the point
+ * longitude: computed longitude of the point
+ * height: computed ellipsoidal height of the point
+ */
 function xyz_to_geographic($x, $y, $z, $a, $b, &$latitude, &$longitude, &$height) : int
 {
     $e_square = ($a * $a - $b * $b) / ($a * $a);

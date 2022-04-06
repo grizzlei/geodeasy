@@ -1,6 +1,5 @@
 <?php
 
-require('../../lib/error.php');
 require('../../lib/geo_xyz_conversions.php');
 header('Content-type: application/json');
 
