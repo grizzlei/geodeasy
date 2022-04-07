@@ -3,7 +3,8 @@
 require('../../lib/geo_xyz_conversions.php');
 header('Content-type: application/json');
 
-ini_set('serialize_precision', 8);
+ini_set('precision', 8);
+ini_set('serialize_precision', -1);
 
 $lat=$_GET["latitude"];
 $lng=$_GET["longitude"];
@@ -17,9 +18,9 @@ $z = .0;
 
 $err = geographic_to_xyz(deg2rad($lat), deg2rad($lng), $ht, $a, $b, $x, $y, $z);
 
-$response->payload->x = round($x,8);
-$response->payload->y = round($y,8);
-$response->payload->z = round($z,8);
+$response->payload->x = round($x, 3);
+$response->payload->y = round($y, 3);
+$response->payload->z = round($z, 3);
 
 $response->error =  geodeasy_error_str($err);
 $response->warnings = [];

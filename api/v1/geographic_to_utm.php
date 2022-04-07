@@ -3,7 +3,8 @@
 require('../../lib/geo_tm_conversions.php');
 header('Content-type: application/json');
 
-ini_set('serialize_precision', 8);
+ini_set('precision', 8);
+ini_set('serialize_precision', -1);
 
 $lat=$_GET["latitude"];
 $lng=$_GET["longitude"];
@@ -22,8 +23,8 @@ $k0 = GDS_UTM_SCALE_FACTOR;
 
 $err = geographic_to_transverse_mercator(deg2rad($lat), deg2rad($lng), deg2rad($lat0), deg2rad($lng0), $E0, $N0, $k0, $a, $b, $easting, $northing);
 
-$response->payload->easting = round($easting, 8);
-$response->payload->northing = round($northing, 8);
+$response->payload->easting = round($easting,3);
+$response->payload->northing = round($northing,3);
 $response->payload->utm_zone = $utm_zone;
 $response->payload->hemisphere = $lat > 0 ? 'Northern' : 'Southern';
 $response->error = geodeasy_error_str($err);
