@@ -22,7 +22,8 @@ $err = vincenty_direct(deg2rad($lat),deg2rad($lng),$dst, deg2rad($azm), $a, $b, 
 $response->payload->latitude = round(rad2deg($lat2), 8);
 $response->payload->longitude = round(rad2deg($lng2), 8);
 $response->payload->azimuth = round(rad2deg($azm2), 8);
-$response->error = geodeasy_error_str($err);
+$response->error->code = $err;
+$response->error->what = geodeasy_error_str($err);
 $response->warnings = [];
 
 print(json_encode($response, JSON_PRETTY_PRINT));

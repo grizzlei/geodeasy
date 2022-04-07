@@ -21,8 +21,8 @@ $err = geographic_to_xyz(deg2rad($lat), deg2rad($lng), $ht, $a, $b, $x, $y, $z);
 $response->payload->x = round($x, 3);
 $response->payload->y = round($y, 3);
 $response->payload->z = round($z, 3);
-
-$response->error =  geodeasy_error_str($err);
+$response->error->code = $err;
+$response->error->what = geodeasy_error_str($err);
 $response->warnings = [];
 
 print(json_encode($response, JSON_PRETTY_PRINT));

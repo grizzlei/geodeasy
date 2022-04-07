@@ -31,7 +31,8 @@ $err = transverse_mercator_to_geographic($easting, $northing, deg2rad($origin_la
 
 $response->payload->latitude = round(rad2deg($latitude),8);
 $response->payload->longitude = round(rad2deg($longitude),8);
-$response->error = geodeasy_error_str($err);
+$response->error->code = $err;
+$response->error->what = geodeasy_error_str($err);
 $response->warnings = [];
 
 print(json_encode($response, JSON_PRETTY_PRINT));

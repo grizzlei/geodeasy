@@ -27,7 +27,8 @@ $response->payload->easting = round($easting,3);
 $response->payload->northing = round($northing,3);
 $response->payload->utm_zone = $utm_zone;
 $response->payload->hemisphere = $lat > 0 ? 'Northern' : 'Southern';
-$response->error = geodeasy_error_str($err);
+$response->error->code = $err;
+$response->error->what = geodeasy_error_str($err);
 $response->warnings = [];
 
 print(json_encode($response, JSON_PRETTY_PRINT));
