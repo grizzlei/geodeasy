@@ -19,14 +19,14 @@ require('constants.php');
 function geographic_to_transverse_mercator($latitude, $longitude, $latitude0, $longitude0, $E0, $N0, $k0, $a, $b, &$easting, &$northing) : int
 {
     if(
-        $latitude > GDS_TRANMERC_MAX_LATITUDE || 
+        $latitude > GDS_TM_MAX_LATITUDE || 
         $longitude > GDS_COMMON_MAX_LONGITUDE || 
-        $latitude < -GDS_TRANMERC_MAX_LATITUDE || 
+        $latitude < -GDS_TM_MAX_LATITUDE || 
         $longitude < -GDS_COMMON_MAX_LONGITUDE
       )
         return GoedeasyError::LatitudeLongitudeError;  
 
-    if($latitude0 < -GDS_TRANMERC_MAX_ORIGIN_LATITUDE || $latitude0 > GDS_TRANMERC_MAX_ORIGIN_LATITUDE)
+    if($latitude0 < -GDS_TM_MAX_ORIGIN_LATITUDE || $latitude0 > GDS_TM_MAX_ORIGIN_LATITUDE)
         return GoedeasyError::TransverseMercatorMaxOriginLatitudeError;
 
     $e_square = (pow($a,2) - pow($b,2)) / pow($a,2);

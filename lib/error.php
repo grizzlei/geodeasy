@@ -8,6 +8,7 @@ abstract class GoedeasyError
     const TransverseMercatorMaxLatitudeError = 3;
     const TransverseMercatorMaxOriginLatitudeError = 4;
     const VincentyConvergeError = 5;
+    const MissingParameter = 6;
 }
 
 function geodeasy_error_str($err) : string {

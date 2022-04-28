@@ -5,7 +5,11 @@ $api_great_circle_distance="/api/v1/great_circle_distance.php?latitude1=41.08513
 $api_geo_to_xyz="/api/v1/geographic_to_xyz.php?latitude=35.123&longitude=41.1235&height=100&a=6378137.0&b=6356752.314245";
 $api_xyz_to_geo="/api/v1/xyz_to_geographic.php?x=3934204.2181574507&y=3434867.698830731&z=3649094.041811154&a=6378137.0&b=6356752.314245";
 $api_geo_to_utm="/api/v1/geographic_to_utm.php?latitude=35.123&longitude=41.1235&a=6378137.0&b=6356752.314245";
-$api_utm_to_geo="/api/v1/utm_to_geographic.php?easting=693497.58&northing=3888747&utm_zone=37&hemisphere=N&a=6378137.0&b=6356752.314245"
+$api_utm_to_geo="/api/v1/utm_to_geographic.php?easting=693497.58&northing=3888747&utm_zone=37&hemisphere=N&a=6378137.0&b=6356752.314245";
+$api_tm_to_geo="/api/v1/tm_to_geographic.php?easting=693497.58&northing=3888747&hemisphere=N&a=6378137.0&b=6356752.314245&lon0=39.0&lat0=0.0&k0=0.9996";
+$api_geo_to_tm="/api/v1/geographic_to_tm.php?latitude=35.123&longitude=41.1235&a=6378137.0&b=6356752.314245&k0=0.9996&lat0=0.0&lng0=39.0";
+$api_geo_to_lcc="/api/v1/geographic_to_lcc.php?a=6378137.0&b=6356752.314245&latitude=41.10487&longitude=29.01887&lat0=30.0&lng0=10.0&lat1=43.0&lat2=62.0";
+$api_lcc_to_geo="";
 ?>
 <html>
     <title>GeodEasy</title>
@@ -45,8 +49,10 @@ target="_blank">Try</a>] /api/v1/geographic_to_utm.php<br>
 [<a href="https://<?php print($base_url.$api_utm_to_geo) ?>"
 target="_blank">Try</a>] /api/v1/utm_to_geographic.php<br>
 [<a>Try</a>] /api/v1/geographic_to_tm.php<br>
-[<a>Try</a>] /api/v1/tm_to_geographic.php<br>
-[<a>Try</a>] /api/v1/geographic_to_lcc.php<br>
+[<a href="https://<?php print($base_url.$api_tm_to_geo) ?>"
+target="_blank">Try</a>] /api/v1/tm_to_geographic.php<br>
+[<a href="https://<?php print($base_url.$api_geo_to_lcc) ?>"
+target="_blank">Try</a>] /api/v1/geographic_to_lcc.php<br>
 [<a>Try</a>] /api/v1/lcc_to_geographic.php
 <p>
 All API calls and their example use are documented <a href="#">here</a> (coming soon).
