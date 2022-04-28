@@ -25,7 +25,7 @@ public REST API instead.
 <p>
 Geodeasy available online tools: (coming soon)<p>
 
-<a href="#" target="_blank">Destination calculation on ellipsoid</a><br>
+<a href="https://geodeasy.org/tools/destination.html" target="_blank">Destination calculation on ellipsoid</a><br>
 <a href="#" target="_blank">Great circle distance calculation on ellipsoid</a><br>
 <a href="#" target="_blank">Geographic - Cartesian (earth-centered, earth-fixed) conversions on ellipsoid</a><br>
 <a href="https://geodeasy.org/tools/geographic_to_utm.html" target="_blank">Geographic - Universal Transverse Mercator to Geographic</a><br>
