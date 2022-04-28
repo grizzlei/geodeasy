@@ -21,7 +21,7 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
     <script>
-        function postToApi(){
+        function geodeasy_perform(){
             $.get("https://geodeasy.org/api/v1/geographic_to_utm.php?latitude=" + $("#iLatitude").val() + 
                 "&longitude=" + $("#iLongitude").val() + "&a=" + $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val(), function(data, status){
                 console.log(data);
@@ -104,7 +104,7 @@
                 </div>
                 <div id="result"></div>
             </div>
-            <button type="button" class="btn btn-primary" onclick="postToApi()" id="btnSubmit">Submit</button>
+            <button type="button" class="btn btn-primary" onclick="geodeasy_perform()" id="btnSubmit">Submit</button>
         </div>
     </div>
 </body>
