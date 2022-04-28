@@ -25,12 +25,13 @@ public REST API instead.
 <p>
 Geodeasy available online tools: (coming soon)<p>
 
-<a href="#">Destination calculation on ellipsoid</a><br>
-<a href="#">Great circle distance calculation on ellipsoid</a><br>
-<a href="#">Geographic - Cartesian (earth-centered, earth-fixed) conversions on ellipsoid</a><br>
-<a href="#">Geographic - Universal Transverse Mercator conversions on ellipsoid</a><br>
-<a href="#">Geographic - Transverse Mercator conversions on ellipsoid</a><br>
-<a href="#">Geographic - Lambert Conformal Conic conversions on ellipsoid</a>
+<a href="#" target="_blank">Destination calculation on ellipsoid</a><br>
+<a href="#" target="_blank">Great circle distance calculation on ellipsoid</a><br>
+<a href="#" target="_blank">Geographic - Cartesian (earth-centered, earth-fixed) conversions on ellipsoid</a><br>
+<a href="https://geodeasy.org/tools/geographic_to_utm.html" target="_blank">Geographic - Universal Transverse Mercator to Geographic</a><br>
+<a href="https://geodeasy.org/tools/utm_to_geographic.html" target="_blank">Geographic - Geographic to Universal Transverse Mercator</a><br>
+<a href="#" target="_blank">Geographic - Transverse Mercator conversions on ellipsoid</a><br>
+<a href="#" target="_blank">Geographic - Lambert Conformal Conic conversions on ellipsoid</a>
 
 <hr>
 <h3> API documentation and examples </h3>
