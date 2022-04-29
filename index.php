@@ -16,7 +16,6 @@ $api_lcc_to_geo="";
 <body style="width:25%; font-family:Helvetica; font-size:12px;">
     
 <h3>GeodEasy</h3>
-<a href="https://geodeasy.org">Website (geodeasy.org)</a> 
 <p>
 <h3> Intro </h3>
 Geodeasy is an open source tool for a set of basic and complicated geodetic

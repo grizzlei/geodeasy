@@ -82,13 +82,17 @@
                 </div>
             </div>
             <div class="row">
-                <div class="container" style="width: 50%;">
+                <div class="container" style="width: 33%;">
                     <label>Latitude</label>
                     <input type="number" step="any" name="iLatitude" id="iLatitude" class="form-control" readonly>
                 </div>
-                <div class="container" style="width: 50%;">
+                <div class="container" style="width: 33%;">
                     <label>Longitude</label>
                     <input type="number" step="any" name="iLongitude" id="iLongitude" class="form-control" readonly>
+                </div>
+                <div class="container" style="width: 33%;">
+                    <label>Height (m)</label><br>
+                    <input type="number" step="any" name="iHeight" id="iHeight" class="form-control" readonly>
                 </div>
             </div>
             <button type="button" class="btn btn-primary" onclick="geodeasy_perform()" id="btnSubmit">Submit</button>
