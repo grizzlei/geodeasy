@@ -32,18 +32,18 @@ A typical GET request to Geodeasy APIs:
   
 A typical response body from Geodeasy APIs:
 
-{
-    "payload": {
-        "latitude": 35.22672767,
-        "longitude": 41.17457877,
-        "azimuth": 22.02942516
-    },
-    "error": {
-        "code": 0,
-        "what": "GEODEASY\_NO\_ERROR"
-    },
-    "warnings": \[\]
-}
+    {
+        "payload": {
+            "latitude": 35.22672767,
+            "longitude": 41.17457877,
+            "azimuth": 22.02942516
+        },
+        "error": {
+            "code": 0,
+            "what": "GEODEASY_NO_ERROR"
+        },
+        "warnings": []
+    }
 
   
 If something goes wrong, a descriptive warning or a pair of error code and number will be returned.
