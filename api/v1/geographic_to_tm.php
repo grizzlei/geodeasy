@@ -23,7 +23,7 @@ $lat=$_GET["latitude"];
 
 $lng=$_GET["longitude"];
 $lat0=$_GET["lat0"];
-$lng0=$_GET["lng0"];
+$lon0=$_GET["lon0"];
 $k0 = $_GET["k0"] ?? GDS_TM_SCALE_FACTOR;
 if($k0 === null) {
     $k0 = GDS_TM_SCALE_FACTOR;
@@ -36,7 +36,7 @@ $northing = .0;
 $E0 = GDS_TM_FALSE_EASTING;
 $N0 = $lat < 0 ? GDS_TM_FALSE_NORTHING : 0;
 
-$err = geographic_to_transverse_mercator(deg2rad($lat), deg2rad($lng), deg2rad($lat0), deg2rad($lng0), $E0, $N0, $k0, $a, $b, $easting, $northing);
+$err = geographic_to_transverse_mercator(deg2rad($lat), deg2rad($lng), deg2rad($lat0), deg2rad($lon0), $E0, $N0, $k0, $a, $b, $easting, $northing);
 
 $response->payload->easting = round($easting,3);
 $response->payload->northing = round($northing,3);

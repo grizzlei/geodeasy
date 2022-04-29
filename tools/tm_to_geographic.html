@@ -19,17 +19,6 @@
         utils.getEllipsoidParams = getEllipsoidParams;
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-    <script>
-        function geodeasy_perform(){
-            $.get("https://geodeasy.org/api/v1/geographic_to_xyz.php?latitude=" + $("#iLatitude").val() + 
-                "&longitude=" + $("#iLongitude").val() + "&height=" + $("#iHeight").val() + "&a=" + $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val(), function(data, status){
-                $("#iX").val(data.payload.x);
-                $("#iY").val(data.payload.y);
-                $("#iZ").val(data.payload.z);
-            });
-        }
-    </script>
 </head>
 
 <body>
@@ -42,24 +31,45 @@
                 tileSize: 256,
                 zoomOffset: 0,
             }).addTo(map);
-            var marker;
-            map.on('click', function (e) {
-                document.getElementById('iLatitude').value = e.latlng.lat;
-                document.getElementById('iLongitude').value = e.latlng.lng;
-                if(marker)
-                    map.removeLayer(marker);
-                marker = new L.marker(e.latlng).addTo(map);
-            });
+
+            function geodeasy_perform(){
+                $.get("https://geodeasy.org/api/v1/tm_to_geographic.php?easting=" + $("#iEasting").val() + "&northing=" + $("#iNorthing").val() + 
+                    "&k0=" + $("#iScaleFactor").val() + "&hemisphere=" + $("#iHemisphere").val() + "&a=" + 
+                    $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val() + "&lat0=" + $("#iLat0").val() + "&lon0=" + $("#iLon0").val(), function(data, status){
+                    $("#iLatitude").val(data.payload.latitude);
+                    $("#iLongitude").val(data.payload.longitude);
+                    map.flyTo([data.payload.latitude, data.payload.longitude], 12);
+                    var marker = new L.marker([data.payload.latitude, data.payload.longitude]).addTo(map);
+                });
+            }
         </script>
         <div class="container" style="padding: 5px;">
             <div class="row">
                 <div class="container" style="width: 50%;">
-                    <label>Latitude</label><br>
-                    <input type="number" step="any" name="iLatitude" id="iLatitude" class="form-control" required><br>
+                    <label>Easting</label><br>
+                    <input type="number" step="any" name="iEasting" id="iEasting" class="form-control" required><br>
                 </div>
                 <div class="container" style="width: 50%;">
-                    <label>Longitude</label><br>
-                    <input type="number" step="any" name="iLongitude" id="iLongitude" class="form-control" required>
+                    <label>Northing</label><br>
+                    <input type="number" step="any" name="iNorthing" id="iNorthing" class="form-control" required><br>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container" style="width: 50%;">
+                    <label>Hemisphere</label><br>
+                    <input type="text" step="any" name="iHemisphere" id="iHemisphere" class="form-control" required><br>
+                </div>
+                <div class="container" style="width: 50%;">
+                    <label>Origin Latitude</label><br>
+                    <input type="number" step="any" name="iLat0" id="iLat0" class="form-control" required><br>
+                </div>
+                <div class="container" style="width: 50%;">
+                    <label>Central Meridian</label><br>
+                    <input type="number" step="any" name="iLon0" id="iLon0" class="form-control" required><br>
+                </div>
+                <div class="container" style="width: 50%;">
+                    <label>Scale Factor</label><br>
+                    <input type="number" step="any" name="iScaleFactor" id="iScaleFactor" class="form-control" required><br>
                 </div>
             </div>
             <div class="row">
@@ -85,17 +95,13 @@
                 </div>
             </div>
             <div class="row">
-                <div class="container" style="width: 33%;">
-                    <label>X</label><br>
-                    <input type="number" step="any" name="iX" id="iX" class="form-control" readonly><br>
+                <div class="container" style="width: 50%;">
+                    <label>Latitude</label><br>
+                    <input type="number" step="any" name="iLatitude" id="iLatitude" class="form-control" readonly><br>
                 </div>
-                <div class="container" style="width: 33%;">
-                    <label>Y</label><br>
-                    <input type="number" step="any" name="iY" id="iY" class="form-control" readonly><br>
-                </div>
-                <div class="container" style="width: 33%;">
-                    <label>Z</label><br>
-                    <input type="number" step="any" name="iZ" id="iZ" class="form-control" readonly><br>
+                <div class="container" style="width: 50%;">
+                    <label>Longitude</label><br>
+                    <input type="number" step="any" name="iLongitude" id="iLongitude" class="form-control" readonly>
                 </div>
             </div>
             <button type="button" class="btn btn-primary" onclick="geodeasy_perform()" id="btnSubmit">Submit</button>

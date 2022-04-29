@@ -7,8 +7,8 @@ $api_xyz_to_geo="/api/v1/xyz_to_geographic.php?x=3934204.2181574507&y=3434867.69
 $api_geo_to_utm="/api/v1/geographic_to_utm.php?latitude=35.123&longitude=41.1235&a=6378137.0&b=6356752.314245";
 $api_utm_to_geo="/api/v1/utm_to_geographic.php?easting=693497.58&northing=3888747&utm_zone=37&hemisphere=N&a=6378137.0&b=6356752.314245";
 $api_tm_to_geo="/api/v1/tm_to_geographic.php?easting=693497.58&northing=3888747&hemisphere=N&a=6378137.0&b=6356752.314245&lon0=39.0&lat0=0.0&k0=0.9996";
-$api_geo_to_tm="/api/v1/geographic_to_tm.php?latitude=35.123&longitude=41.1235&a=6378137.0&b=6356752.314245&k0=0.9996&lat0=0.0&lng0=39.0";
-$api_geo_to_lcc="/api/v1/geographic_to_lcc.php?a=6378137.0&b=6356752.314245&latitude=41.10487&longitude=29.01887&lat0=30.0&lng0=10.0&lat1=43.0&lat2=62.0";
+$api_geo_to_tm="/api/v1/geographic_to_tm.php?latitude=35.123&longitude=41.1235&a=6378137.0&b=6356752.314245&k0=0.9996&lat0=0.0&lon0=39.0";
+$api_geo_to_lcc="/api/v1/geographic_to_lcc.php?a=6378137.0&b=6356752.314245&latitude=41.10487&longitude=29.01887&lat0=30.0&lon0=10.0&lat1=43.0&lat2=62.0";
 $api_lcc_to_geo="";
 ?>
 <html>
@@ -27,12 +27,12 @@ Geodeasy available online tools: (coming soon)<p>
 
 <a href="https://geodeasy.org/tools/destination.html" target="_blank">Destination calculation on ellipsoid</a><br>
 <a href="https://geodeasy.org/tools/great_circle_distance.html" target="_blank">Great circle distance calculation on ellipsoid</a><br>
-<a href="https://geodeasy.org/tools/geographic_to_xyz.html" target="_blank">Geographic to Cartesian (earth-centered, earth-fixed) on ellipsoid</a><br>
-<a href="https://geodeasy.org/tools/xyz_to_geographic.html" target="_blank">Cartesian to Geographic (earth-centered, earth-fixed) on ellipsoid</a><br>
-<a href="https://geodeasy.org/tools/geographic_to_utm.html" target="_blank">Geographic - Universal Transverse Mercator to Geographic</a><br>
-<a href="https://geodeasy.org/tools/utm_to_geographic.html" target="_blank">Geographic - Geographic to Universal Transverse Mercator</a><br>
-<a href="#" target="_blank">Geographic - Transverse Mercator conversions on ellipsoid</a><br>
-<a href="#" target="_blank">Geographic - Lambert Conformal Conic conversions on ellipsoid</a>
+<a href="https://geodeasy.org/tools/geographic_to_xyz.html" target="_blank">Geographic to cartesian (earth-centered, earth-fixed) on ellipsoid</a><br>
+<a href="https://geodeasy.org/tools/xyz_to_geographic.html" target="_blank">Cartesian to geographic (earth-centered, earth-fixed) on ellipsoid</a><br>
+<a href="https://geodeasy.org/tools/utm_to_geographic.html" target="_blank">Universal Transverse Mercator to geographic on ellipsoid</a><br>
+<a href="https://geodeasy.org/tools/geographic_to_utm.html" target="_blank">Geographic to Universal Transverse Mercator on ellipsoid</a><br>
+<a href="https://geodeasy.org/tools/tm_to_geographic.html" target="_blank">Transverse Mercator to geographic on ellipsoid</a><br>
+<a href="https://geodeasy.org/tools/geographic_to_tm.html" target="_blank">Geographic to Transverse Mercator on ellipsoid</a>
 
 <hr>
 <h3> API documentation and examples </h3>
@@ -50,7 +50,8 @@ target="_blank">Try</a>] /api/v1/xyz_to_geographic.php<br>
 target="_blank">Try</a>] /api/v1/geographic_to_utm.php<br>
 [<a href="https://<?php print($base_url.$api_utm_to_geo) ?>"
 target="_blank">Try</a>] /api/v1/utm_to_geographic.php<br>
-[<a>Try</a>] /api/v1/geographic_to_tm.php<br>
+[<a href="https://<?php print($base_url.$api_geo_to_tm) ?>"
+target="_blank">Try</a>] /api/v1/geographic_to_tm.php<br>
 [<a href="https://<?php print($base_url.$api_tm_to_geo) ?>"
 target="_blank">Try</a>] /api/v1/tm_to_geographic.php<br>
 [<a href="https://<?php print($base_url.$api_geo_to_lcc) ?>"

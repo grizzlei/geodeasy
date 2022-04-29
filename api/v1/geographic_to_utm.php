@@ -16,12 +16,12 @@ $northing = .0;
 
 $lat0 = 0.0;
 $utm_zone = ceil(($lng + 180.0) / 6);
-$lng0 = $utm_zone * 6 - 3 - 180; 
+$lon0 = $utm_zone * 6 - 3 - 180; 
 $E0 = GDS_TM_FALSE_EASTING;
 $N0 = $lat < 0 ? GDS_TM_FALSE_NORTHING : 0;
 $k0 = GDS_UTM_SCALE_FACTOR;
 
-$err = geographic_to_transverse_mercator(deg2rad($lat), deg2rad($lng), deg2rad($lat0), deg2rad($lng0), $E0, $N0, $k0, $a, $b, $easting, $northing);
+$err = geographic_to_transverse_mercator(deg2rad($lat), deg2rad($lng), deg2rad($lat0), deg2rad($lon0), $E0, $N0, $k0, $a, $b, $easting, $northing);
 
 $response->payload->easting = round($easting,3);
 $response->payload->northing = round($northing,3);

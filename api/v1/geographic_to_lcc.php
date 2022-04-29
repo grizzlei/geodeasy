@@ -15,7 +15,7 @@ $a = (float)$_GET["a"] ?? GDS_WGS84_SEMI_MAJOR;
 // semi-minor axis of the ellipsoid, default is wgs84 semi-minor (6356752.314245)
 $b = (float)$_GET["b"] ?? GDS_WGS84_SEMI_MINOR;
 // central meridian
-$lng0 = (float)$_GET["lng0"];
+$lon0 = (float)$_GET["lon0"];
 // latitude of origin
 $lat0 = (float)$_GET["lat0"]; 
 // standard parallel 1
@@ -33,7 +33,7 @@ $easting = .0;
 // northing of the point
 $northing = .0;
 
-$err = geographic_to_lambert_conformal_conic_2sp(deg2rad($lat), deg2rad($lng), deg2rad($lng0), 
+$err = geographic_to_lambert_conformal_conic_2sp(deg2rad($lat), deg2rad($lng), deg2rad($lon0), 
     deg2rad($lat0), deg2rad($lat1), deg2rad($lat2), $E0, $N0, $k0, $a, $b, $easting, $northing);
 
 $response->payload->easting = round($easting,3);

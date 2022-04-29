@@ -59,22 +59,24 @@
                     <input type="number" step="any" name="iLongitude" id="iLongitude" class="form-control" required>
                 </div>
             </div>
-            <label>Ellipsoid</label>
-            <select id="selEllipsoid" name="iEllipsoid" class="form-control"
-                onchange="utils.getEllipsoidParams(this)">
-                <option value="WGS84">WGS84</option>
-                <option value="GRS80">GRS80</option>
-                <option value="HAYFORD">Hayford</option>
-                <option value="KRASSOVSKY">Krassovsky</option>
-                <option value="CLARKE">Clarke</option>
-                <option value="BESSEL">Bessel</option>
-            </select><br>
             <div class="row">
-                <div class="container" style="width: 50%;">
+                <div class="container" style="width: 33%;">
+                    <label>Ellipsoid</label>
+                    <select id="selEllipsoid" name="iEllipsoid" class="form-control"
+                        onchange="utils.getEllipsoidParams(this)">
+                        <option value="WGS84">WGS84</option>
+                        <option value="GRS80">GRS80</option>
+                        <option value="HAYFORD">Hayford</option>
+                        <option value="KRASSOVSKY">Krassovsky</option>
+                        <option value="CLARKE">Clarke</option>
+                        <option value="BESSEL">Bessel</option>
+                    </select>
+                </div>
+                <div class="container" style="width: 33%;">
                     <label>Semi-Major axis:</label><br>
                     <input type="number" step="any" name="iSemiMajor" id="iSemiMajor" class="form-control" required><br>
                 </div>
-                <div class="container" style="width: 50%;">
+                <div class="container" style="width: 33%;">
                     <label>Semi-Minor axis:</label><br>
                     <input type="number" step="any" name="iSemiMinor" id="iSemiMinor" class="form-control" required><br>
                 </div>

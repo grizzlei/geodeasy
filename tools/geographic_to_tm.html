@@ -22,11 +22,12 @@
 
     <script>
         function geodeasy_perform(){
-            $.get("https://geodeasy.org/api/v1/geographic_to_xyz.php?latitude=" + $("#iLatitude").val() + 
-                "&longitude=" + $("#iLongitude").val() + "&height=" + $("#iHeight").val() + "&a=" + $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val(), function(data, status){
-                $("#iX").val(data.payload.x);
-                $("#iY").val(data.payload.y);
-                $("#iZ").val(data.payload.z);
+            $.get("https://geodeasy.org/api/v1/geographic_to_tm.php?latitude=" + $("#iLatitude").val() + 
+                "&longitude=" + $("#iLongitude").val() + "&a=" + $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val() +
+                "&k0=" + $("#iScaleFactor").val() + "&lat0=" + $("#iLat0").val() + "&lon0=" + $("#iLon0").val(), function(data, status){
+                $("#iEasting").val(data.payload.easting);
+                $("#iNorthing").val(data.payload.northing);
+                $("#iHemisphere").val(data.payload.hemisphere);
             });
         }
     </script>
@@ -42,13 +43,9 @@
                 tileSize: 256,
                 zoomOffset: 0,
             }).addTo(map);
-            var marker;
             map.on('click', function (e) {
                 document.getElementById('iLatitude').value = e.latlng.lat;
                 document.getElementById('iLongitude').value = e.latlng.lng;
-                if(marker)
-                    map.removeLayer(marker);
-                marker = new L.marker(e.latlng).addTo(map);
             });
         </script>
         <div class="container" style="padding: 5px;">
@@ -60,6 +57,20 @@
                 <div class="container" style="width: 50%;">
                     <label>Longitude</label><br>
                     <input type="number" step="any" name="iLongitude" id="iLongitude" class="form-control" required>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container" style="width: 33%;">
+                    <label>Origin Latitude</label><br>
+                    <input type="number" step="any" name="iLat0" id="iLat0" class="form-control" required><br>
+                </div>
+                <div class="container" style="width: 33%;">
+                    <label>Central Meridian</label><br>
+                    <input type="number" step="any" name="iLon0" id="iLon0" class="form-control" required><br>
+                </div>
+                <div class="container" style="width: 33%;">
+                    <label>Scale Factor</label><br>
+                    <input type="number" step="any" name="iScaleFactor" id="iScaleFactor" class="form-control" required><br>
                 </div>
             </div>
             <div class="row">
@@ -86,16 +97,16 @@
             </div>
             <div class="row">
                 <div class="container" style="width: 33%;">
-                    <label>X</label><br>
-                    <input type="number" step="any" name="iX" id="iX" class="form-control" readonly><br>
+                    <label>Easting:</label><br>
+                    <input type="number" step="any" name="iEasting" id="iEasting" class="form-control" readonly><br>
                 </div>
                 <div class="container" style="width: 33%;">
-                    <label>Y</label><br>
-                    <input type="number" step="any" name="iY" id="iY" class="form-control" readonly><br>
+                    <label>Northing</label><br>
+                    <input type="number" step="any" name="iNorthing" id="iNorthing" class="form-control" readonly><br>
                 </div>
                 <div class="container" style="width: 33%;">
-                    <label>Z</label><br>
-                    <input type="number" step="any" name="iZ" id="iZ" class="form-control" readonly><br>
+                    <label>Hemisphere</label><br>
+                    <input type="text" step="any" name="iHemisphere" id="iHemisphere" class="form-control" readonly><br>
                 </div>
             </div>
             <button type="button" class="btn btn-primary" onclick="geodeasy_perform()" id="btnSubmit">Submit</button>
