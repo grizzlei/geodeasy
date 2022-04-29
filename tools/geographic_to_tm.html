@@ -26,6 +26,7 @@
         <div id="map"></div>
         <script>
             var map = L.map('map').setView([41.1044, 29.0265], 15);
+            var marker;
             L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
                 attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
                 tileSize: 256,
@@ -34,6 +35,9 @@
             map.on('click', function (e) {
                 document.getElementById('iLatitude').value = e.latlng.lat;
                 document.getElementById('iLongitude').value = e.latlng.lng;
+                if(marker)
+                    map.removeLayer(marker);
+                marker = new L.marker(e.latlng).addTo(map);
             });
             function geodeasy_perform(){
                 $.get("https://geodeasy.org/api/v1/geographic_to_tm.php?latitude=" + $("#iLatitude").val() + 
