@@ -1,10 +1,16 @@
-### GeodEasy
-(This README is simply index.php except this line, converted to markdown using [codebeautify.org/html-to-markdown](https://codebeautify.org/html-to-markdown))
-### Intro
+ ```
+                       _ _____                
+   __ _  ___  ___   __| | ____|__ _ ___ _   _ 
+  / _` |/ _ \/ _ \ / _` |  _| / _` / __| | | |
+ | (_| |  __/ (_) | (_| | |__| (_| \__ \ |_| |
+  \__, |\___|\___/ \__,_|_____\__,_|___/\__, |
+  |___/                                 |___/ 
+```
+(This README is simply index.php except this line, converted to markdown with minor tweaks using [codebeautify.org/html-to-markdown](https://codebeautify.org/html-to-markdown))
 
 Geodeasy is an open source tool for a set of basic and complicated geodetic computations. Although all of its code is available, you can still use its public REST API instead.
 
-Geodeasy available online tools:
+Geodeasy online tools:
 
 [Destination calculation on ellipsoid](https://geodeasy.org/tools/destination.html)  
 [Great circle distance calculation on ellipsoid](https://geodeasy.org/tools/great_circle_distance.html)  
@@ -19,52 +25,75 @@ Geodeasy available online tools:
 
 ### API documentation and examples
 
+A typical GET request to Geodeasy APIs:
+
+    https://geodeasy.org/api/v1/destination.php?latitude=35.123&longitude=41.1235&distance=12413&azimuth=22&a=6378137.0&b=6356752.314245
+
+  
+A typical response body from Geodeasy APIs:
+
+{
+    "payload": {
+        "latitude": 35.22672767,
+        "longitude": 41.17457877,
+        "azimuth": 22.02942516
+    },
+    "error": {
+        "code": 0,
+        "what": "GEODEASY\_NO\_ERROR"
+    },
+    "warnings": \[\]
+}
+
+  
+If something goes wrong, a descriptive warning or a pair of error code and number will be returned.
+
 Try out Geodeasy public REST API:  
 
 \[[Try](https://geodeasy.org/api/v1/destination.php?latitude=35.123&longitude=41.1235&distance=12413&azimuth=22&a=6378137.0&b=6356752.314245)\] **/api/v1/destination.php**  
 Synopsis: Find latitude, longitude and the azimuth at the destination point on ellipsoid from given first point coordinates, azimuth and distance.  
-Parameters: latitude, longitude, azimuth, distance.  
-Returns: latitude (°), longitude (°) and azimuth (°) at destination point.
+Parameters: **latitude** (°), **longitude** (°), **azimuth** (°), **distance** (m), ellipsoid parameters **a** and **b**.  
+Returns: **latitude** (°), **longitude** (°) and **azimuth** (°) at destination point.
 
 \[[Try](https://geodeasy.org/api/v1/great_circle_distance.php?latitude1=41.085136&longitude1=29.006844&latitude2=-44.9581658&longitude2=34.1099889&a=6378137.0&b=6356752.314245)\] **/api/v1/great\_circle\_distance.php**  
 Synopsis: Find the distance between two points on ellipsoid.  
-Parameters: ellipsoidal coordinates of first and second points, ellipsoid parameters.  
-Returns: azimuth (°) at the first point, reverse azimuth (°) at the second point and the distance (m).
+Parameters: ellipsoidal coordinates of first and second points (**latitude1**, **longitude1, latitude2, longitude2**), ellipsoid parameters **a** and **b**.  
+Returns: **azimuth** (°) at the first point, reverse azimuth (**reverse\_azimuth**) (°) at the second point and the **distance** (m).
 
 \[[Try](https://geodeasy.org/api/v1/geographic_to_xyz.php?latitude=35.123&longitude=41.1235&height=100&a=6378137.0&b=6356752.314245)\] **/api/v1/geographic\_to\_xyz.php**  
 Synopsis: Convert ellipsoidal coordinates of a point to x, y and z (ECEF) coordinates.  
-Parameters: latitude (°) and longitude (°) of the point, ellipsoid parameters.  
-Returns: x (m), y (m), z (m) of the point.
+Parameters: **latitude** (°), **longitude** (°) and ellipsoidal **height** of the point, ellipsoid parameters **a** and **b**.  
+Returns: **x** (m), **y** (m), **z** (m) of the point.
 
 \[[Try](https://geodeasy.org/api/v1/xyz_to_geographic.php?x=3934204.2181574507&y=3434867.698830731&z=3649094.041811154&a=6378137.0&b=6356752.314245)\] **/api/v1/xyz\_to\_geographic.php**  
 Synopsis: Convert cartesian coordinates to ellipsoidal coordinates; latitude, longitude and height.  
-Parameters: x (m), y (m), z (m) of the point and ellipsoid parameters.  
-Returns: latitude (°), longitude (°) of the given point.
+Parameters: **x** (m), **y** (m), **z** (m) of the point and ellipsoid parameters **a** and **b**.  
+Returns: **latitude** (°), **longitude** (°) and ellipsoidal **height** of the given point.
 
 \[[Try](https://geodeasy.org/api/v1/geographic_to_utm.php?latitude=35.123&longitude=41.1235&a=6378137.0&b=6356752.314245)\] **/api/v1/geographic\_to\_utm.php**  
 Synopsis: Convert ellipsoidal coordinates of a point to Universal Transverse Mercator (UTM) projection coordinates.  
-Parameters: latitude (°), longitude (°) and ellipsoid parameters.  
-Returns: easting (m), northing (m), UTM zone and hemisphere.
+Parameters: **latitude** (°), **longitude** (°) and ellipsoid parameters **a** and **b**.  
+Returns: **easting** (m), **northing** (m), **utm\_zone** and **hemisphere**.
 
 \[[Try](https://geodeasy.org/api/v1/utm_to_geographic.php?easting=693497.58&northing=3888747&utm_zone=37&hemisphere=N&a=6378137.0&b=6356752.314245)\] **/api/v1/utm\_to\_geographic.php**  
 Synopsis: Convert Universal Transverse Mercator (UTM) projection coordinates to latitude, longitude on a given ellipsoid.  
-Parameters: easting (m), northing (m), UTM zone, hemisphere and ellipsoid parameters.  
-Returns: latitude longitude of the point.
+Parameters: **easting** (m), **northing** (m), UTM zone (**utm\_zone**), **hemisphere** and ellipsoid parameters **a** and **b**.  
+Returns: **latitude**, **longitude** of the point.
 
 \[[Try](https://geodeasy.org/api/v1/geographic_to_tm.php?latitude=35.123&longitude=41.1235&a=6378137.0&b=6356752.314245&k0=0.9996&lat0=0.0&lon0=39.0)\] **/api/v1/geographic\_to\_tm.php**  
 Synopsis: Convert ellipsoidal coordinates to Transverse Mercator projection coordinates.  
-Parameters: latitude (°) and longitude (°) of the point, origin latitude (°), central meridian (°) of the zone and ellipsoid parameters.  
-Returns: easting (m), northing (m) and hemisphere of the point.
+Parameters: **latitude** (°) and **longitude** (°) of the point, origin latitude (**lat0**) (°), central meridian (**lon0**) (°), scale factor (**k0**) and ellipsoid parameters **a** and **b**.  
+Returns: **easting** (m), **northing** (m) and **hemisphere** of the point.
 
 \[[Try](https://geodeasy.org/api/v1/tm_to_geographic.php?easting=693497.58&northing=3888747&hemisphere=N&a=6378137.0&b=6356752.314245&lon0=39.0&lat0=0.0&k0=0.9996)\] **/api/v1/tm\_to\_geographic.php**  
 Synopsis: Convert Transverse Mercator projection coordinates to ellipsoidal coordinates.  
-Parameters: easting (m), northing (m), hemisphere, origin latitude (°), central meridian (°), scale factor and ellipsoid parameters.  
-Returns: latitude (°) and longitude (°) of the point.
+Parameters: **easting** (m), **northing** (m), **hemisphere**, origin latitude (**lat0**) (°), central meridian (**lon0**) (°), scale factor (**k0**) and ellipsoid parameters **a** and **b**.  
+Returns: **latitude** (°) and **longitude** (°) of the point.
 
 \[[Try](https://geodeasy.org/api/v1/geographic_to_lcc.php?a=6378137.0&b=6356752.314245&latitude=41.10487&longitude=29.01887&lat0=30.0&lon0=10.0&lat1=43.0&lat2=62.0)\] **/api/v1/geographic\_to\_lcc.php**  
 Synopsis: Convert ellipsoidal coordinates to Lambert Conformal Conic (LCC) projection coordinates.  
-Parameters: latitude (°) and longitude (°) of the point, first standard parallel (°), second standard parallel (°), origin latitude (°), central meridian (°) and ellipsoid parameters.  
-Returns: easting (m) and northing (m) of the point.
+Parameters: **latitude** (°) and **longitude** (°) of the point, first standard parallel (**lat1**) (°), second standard parallel (**lat2**) (°), origin latitude (**lat0**) (°), central meridian (**lon0**) (°) and ellipsoid parameters **a** and **b**.  
+Returns: **easting** (m) and **northing** (m) of the point.
 
 \[Try\] **/api/v1/lcc\_to\_geographic.php**
 
