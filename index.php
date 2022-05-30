@@ -13,15 +13,26 @@ $api_lcc_to_geo="";
 ?>
 <html>
     <title>GeodEasy</title>
+    <head>
+      <!-- Global site tag (gtag.js) - Google Analytics -->
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECXWC4T4NV"></script>
+      <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+
+        gtag('config', 'G-ECXWC4T4NV');
+      </script>
+    </head>
 <body style="font-family:Helvetica; font-size:12px;">
 
 <pre>
-                       _ _____                
-   __ _  ___  ___   __| | ____|__ _ ___ _   _ 
+                       _ _____
+   __ _  ___  ___   __| | ____|__ _ ___ _   _
   / _` |/ _ \/ _ \ / _` |  _| / _` / __| | | |
  | (_| |  __/ (_) | (_| | |__| (_| \__ \ |_| |
   \__, |\___|\___/ \__,_|_____\__,_|___/\__, |
-  |___/                                 |___/ 
+  |___/                                 |___/
 
 </pre>
 
@@ -62,7 +73,7 @@ A typical response body from Geodeasy APIs:
     "warnings": []
 }
 </pre><br>
-If something goes wrong, a descriptive warning or a pair of error code and number will be returned.
+If something goes wrong, a descriptive warning or a pair of error code and text will be returned.
 <p>
 Try out Geodeasy public REST API:<br>
 <p>
@@ -137,12 +148,12 @@ FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
 AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
 LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE. 
+SOFTWARE.
 <p>
-This is a licence-free software, it can be used by anyone who try to build a 
+This is a licence-free software, it can be used by anyone who try to build a
 better world.
 <hr>
-<a href="https://hasankaraman.dev/whoami">hasan karaman (whoami)</a> - <a href="https://hasankaraman.dev">https://hasankaraman.dev</a> - <a href="mailto:hk@hasankaraman.dev">hk@hasankaraman.dev</a> - 2022 
+<a href="https://hasankaraman.dev/whoami">hasan karaman (whoami)</a> - <a href="https://hasankaraman.dev">https://hasankaraman.dev</a> - <a href="mailto:hk@hasankaraman.dev">hk@hasankaraman.dev</a> - 2022
 
     </body>
 </html>

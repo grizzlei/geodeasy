@@ -17,6 +17,9 @@
     <script type="module">
         import { getEllipsoidParams } from "../js/utils.js";
         utils.getEllipsoidParams = getEllipsoidParams;
+        $(document).ready(function() {
+            utils.getEllipsoidParams(document.getElementById("selEllipsoid"));
+        });
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
@@ -42,7 +45,7 @@
             function geodeasy_perform(){
                 $.get("https://geodeasy.org/api/v1/geographic_to_tm.php?latitude=" + $("#iLatitude").val() + 
                     "&longitude=" + $("#iLongitude").val() + "&a=" + $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val() +
-                    "&k0=" + $("#iScaleFactor").val() + "&lat0=" + $("#iLat0").val() + "&lon0=" + $("#iLon0").val(), function(data, status){
+                    "&k0=1.0&lat0=" + $("#iLat0").val() + "&lon0=" + $("#iLon0").val(), function(data, status){
                     $("#iEasting").val(data.payload.easting);
                     $("#iNorthing").val(data.payload.northing);
                     $("#iHemisphere").val(data.payload.hemisphere);
@@ -61,18 +64,18 @@
                 </div>
             </div>
             <div class="row">
-                <div class="container" style="width: 33%;">
+                <div class="container" style="width: 50%;">
                     <label>Origin Latitude ( &deg; )</label>
                     <input type="number" step="any" name="iLat0" id="iLat0" class="form-control" required>
                 </div>
-                <div class="container" style="width: 33%;">
+                <div class="container" style="width: 50%;">
                     <label>Central Meridian ( &deg; )</label>
                     <input type="number" step="any" name="iLon0" id="iLon0" class="form-control" required>
                 </div>
-                <div class="container" style="width: 33%;">
+                <!-- <div class="container" style="width: 33%;">
                     <label>Scale Factor</label>
                     <input type="number" step="any" name="iScaleFactor" id="iScaleFactor" class="form-control" required>
-                </div>
+                </div> -->
             </div>
             <div class="row">
                 <div class="container" style="width: 33%;">

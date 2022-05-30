@@ -17,6 +17,9 @@
     <script type="module">
         import { getEllipsoidParams } from "../js/utils.js";
         utils.getEllipsoidParams = getEllipsoidParams;
+        $(document).ready(function() {
+            utils.getEllipsoidParams(document.getElementById("selEllipsoid"));
+        });
     </script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
