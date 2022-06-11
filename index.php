@@ -14,6 +14,7 @@ $api_lcc_to_geo="";
 <html>
     <title>GeodEasy</title>
     <head>
+    <!-- <link rel="stylesheet" href="../css/style.css"> -->
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECXWC4T4NV"></script>
       <script>

@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
-
+<title>Universal Transverse Mercator to Geographic Transformation - Geodeasy</title>
+<meta name="description" 
+content="Transformation from UTM projection coordinates: easting, northing to ellipsoidal coordinates: latitude, longitude">
 <head>
     <link rel="stylesheet" href="../css/style.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
@@ -25,28 +27,33 @@
 </head>
 
 <body>
-    <div class="card">
-        <div id="map"></div>
-        <script>
-            var map = L.map('map').setView([41.1044, 29.0265], 15);
-            L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
-                attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
-                tileSize: 256,
-                zoomOffset: 0,
-            }).addTo(map);
-
-            function geodeasy_perform(){
-                $.get("https://geodeasy.org/api/v1/utm_to_geographic.php?easting=" + $("#iEasting").val() + "&northing=" + $("#iNorthing").val() + 
-                    "&utm_zone=" + $("#iUTMZone").val() + "&hemisphere=" + $("#iHemisphere").val() + "&a=" + 
-                    $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val(), function(data, status){
-                    $("#iLatitude").val(data.payload.latitude);
-                    $("#iLongitude").val(data.payload.longitude);
-                    map.flyTo([data.payload.latitude, data.payload.longitude], 12);
-                    var marker = new L.marker([data.payload.latitude, data.payload.longitude]).addTo(map);
-                });
-            }
-        </script>
+    <div class="center-screen">
+        <h3 style="color: #ffffff;">UTM to Geographic Transformation</h3>
         <div class="container" style="padding: 5px;">
+            <div class="row">
+                <div class="container" style="width: 100%;">
+                    <div id="map"></div>
+                </div>
+            </div>
+            <script>
+                var map = L.map('map').setView([41.1044, 29.0265], 15);
+                L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
+                    tileSize: 256,
+                    zoomOffset: 0,
+                }).addTo(map);
+    
+                function geodeasy_perform(){
+                    $.get("https://geodeasy.org/api/v1/utm_to_geographic.php?easting=" + $("#iEasting").val() + "&northing=" + $("#iNorthing").val() + 
+                        "&utm_zone=" + $("#iUTMZone").val() + "&hemisphere=" + $("#iHemisphere").val() + "&a=" + 
+                        $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val(), function(data, status){
+                        $("#iLatitude").val(data.payload.latitude);
+                        $("#iLongitude").val(data.payload.longitude);
+                        map.flyTo([data.payload.latitude, data.payload.longitude], 12);
+                        var marker = new L.marker([data.payload.latitude, data.payload.longitude]).addTo(map);
+                    });
+                }
+            </script>
             <div class="row">
                 <div class="container" style="width: 50%;">
                     <label>Easting (m)</label>
@@ -101,6 +108,9 @@
             </div>
             <button type="button" class="btn btn-primary" onclick="geodeasy_perform()" id="btnSubmit">Submit</button>
         </div>
+    </div>
+    <div class="footer">
+        <a href="https://geodeasy.org">geodeasy.org</a>
     </div>
 </body>
 
