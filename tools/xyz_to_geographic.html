@@ -17,8 +17,9 @@ content="Conversion from cartesian (ECEF) coordinates: x, y, z to ellipsoidal co
         const utils = {};
     </script>
     <script type="module">
-        import { getEllipsoidParams } from "../js/utils.js";
+        import { getEllipsoidParams, decimalToDMS } from "../js/utils.js";
         utils.getEllipsoidParams = getEllipsoidParams;
+        utils.decimalToDMS = decimalToDMS;
         $(document).ready(function () {
             utils.getEllipsoidParams(document.getElementById("selEllipsoid"));
         });
@@ -46,8 +47,8 @@ content="Conversion from cartesian (ECEF) coordinates: x, y, z to ellipsoidal co
                 function geodeasy_perform() {
                     $.get("https://geodeasy.org/api/v1/xyz_to_geographic.php?x=" + $("#iX").val() +
                         "&y=" + $("#iY").val() + "&z=" + $("#iZ").val() + "&a=" + $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val(), function (data, status) {
-                            $("#iLatitude").val(data.payload.latitude);
-                            $("#iLongitude").val(data.payload.longitude);
+                            $("#iLatitude").val(data.payload.latitude + ' ' + utils.decimalToDMS(data.payload.latitude));
+                            $("#iLongitude").val(data.payload.longitude + ' ' + utils.decimalToDMS(data.payload.longitude));
                             $("#iHeight").val(data.payload.height);
                             if (marker)
                                 map.removeLayer(marker);
@@ -94,11 +95,11 @@ content="Conversion from cartesian (ECEF) coordinates: x, y, z to ellipsoidal co
             <div class="row">
                 <div class="container" style="width: 33%;">
                     <label>Latitude ( &deg; )</label>
-                    <input type="number" step="any" name="iLatitude" id="iLatitude" class="form-control" readonly>
+                    <input name="iLatitude" id="iLatitude" class="form-control" readonly>
                 </div>
                 <div class="container" style="width: 33%;">
                     <label>Longitude ( &deg; )</label>
-                    <input type="number" step="any" name="iLongitude" id="iLongitude" class="form-control" readonly>
+                    <input name="iLongitude" id="iLongitude" class="form-control" readonly>
                 </div>
                 <div class="container" style="width: 33%;">
                     <label>Height (m)</label><br>

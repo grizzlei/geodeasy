@@ -17,8 +17,9 @@ content="Transformation from UTM projection coordinates: easting, northing to el
         const utils = {};
     </script>
     <script type="module">
-        import { getEllipsoidParams } from "../js/utils.js";
+        import { getEllipsoidParams, decimalToDMS } from "../js/utils.js";
         utils.getEllipsoidParams = getEllipsoidParams;
+        utils.decimalToDMS = decimalToDMS;
         $(document).ready(function() {
             utils.getEllipsoidParams(document.getElementById("selEllipsoid"));
         });
@@ -47,8 +48,8 @@ content="Transformation from UTM projection coordinates: easting, northing to el
                     $.get("https://geodeasy.org/api/v1/utm_to_geographic.php?easting=" + $("#iEasting").val() + "&northing=" + $("#iNorthing").val() + 
                         "&utm_zone=" + $("#iUTMZone").val() + "&hemisphere=" + $("#iHemisphere").val() + "&a=" + 
                         $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val(), function(data, status){
-                        $("#iLatitude").val(data.payload.latitude);
-                        $("#iLongitude").val(data.payload.longitude);
+                        $("#iLatitude").val(data.payload.latitude + ' ' + utils.decimalToDMS(data.payload.latitude));
+                        $("#iLongitude").val(data.payload.longitude + ' ' + utils.decimalToDMS(data.payload.longitude));
                         map.flyTo([data.payload.latitude, data.payload.longitude], 12);
                         var marker = new L.marker([data.payload.latitude, data.payload.longitude]).addTo(map);
                     });
@@ -99,11 +100,11 @@ content="Transformation from UTM projection coordinates: easting, northing to el
             <div class="row">
                 <div class="container" style="width: 50%;">
                     <label>Latitude ( &deg; )</label>
-                    <input type="number" step="any" name="iLatitude" id="iLatitude" class="form-control" readonly>
+                    <input name="iLatitude" id="iLatitude" class="form-control" readonly>
                 </div>
                 <div class="container" style="width: 50%;">
                     <label>Longitude ( &deg; )</label>
-                    <input type="number" step="any" name="iLongitude" id="iLongitude" class="form-control" readonly>
+                    <input name="iLongitude" id="iLongitude" class="form-control" readonly>
                 </div>
             </div>
             <button type="button" class="btn btn-primary" onclick="geodeasy_perform()" id="btnSubmit">Submit</button>

@@ -17,8 +17,9 @@ content="Find destination point coordinates on ellipsoid given azimuth and dista
         const utils = {};
     </script>
     <script type="module">
-        import { getEllipsoidParams } from "../js/utils.js";
+        import { getEllipsoidParams, decimalToDMS } from "../js/utils.js";
         utils.getEllipsoidParams = getEllipsoidParams;
+        utils.decimalToDMS = decimalToDMS;
         $(document).ready(function() {
             utils.getEllipsoidParams(document.getElementById("selEllipsoid"));
         });
@@ -53,8 +54,8 @@ content="Find destination point coordinates on ellipsoid given azimuth and dista
                 function geodeasy_perform(){
                     $.get("https://geodeasy.org/api/v1/destination.php?latitude=" + $("#iLatitude").val() + "&longitude=" + $("#iLongitude").val() + "&distance=" + 
                         $("#iDistance").val() + "&azimuth=" + $("#iAzimuth").val() + "&a=" + $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val(),function(data, status){
-                        $("#iLatitude2").val(data.payload.latitude);
-                        $("#iLongitude2").val(data.payload.longitude);
+                        $("#iLatitude2").val(data.payload.latitude + ' ' + utils.decimalToDMS(data.payload.latitude));
+                        $("#iLongitude2").val(data.payload.longitude + ' ' + utils.decimalToDMS(data.payload.longitude));
                         $("#iAzimuth2").val(data.payload.azimuth);
                         map.flyTo([data.payload.latitude, data.payload.longitude], 12);
                         var marker = new L.marker([data.payload.latitude, data.payload.longitude]).addTo(map);
@@ -146,11 +147,11 @@ content="Find destination point coordinates on ellipsoid given azimuth and dista
             <div class="row">
                 <div class="container" style="width: 33%;">
                     <label>Destination latitude ( &deg; )</label>
-                    <input type="number" step="any" name="iLatitude2" id="iLatitude2" class="form-control" readonly>
+                    <input name="iLatitude2" id="iLatitude2" class="form-control" readonly>
                 </div>
                 <div class="container" style="width: 33%;">
                     <label>Destination longitude ( &deg; )</label>
-                    <input type="number" step="any" name="iLongitude2" id="iLongitude2" class="form-control" readonly>
+                    <input name="iLongitude2" id="iLongitude2" class="form-control" readonly>
                 </div>
                 <div class="container" style="width: 33%;">
                     <label>Azimuth of geodesic at destination ( &deg; )</label>
