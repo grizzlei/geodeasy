@@ -24,7 +24,7 @@ require('constants.php');
  * b: semi-minor axis of the ellipsoid
  * lat2: computed latitude of the destination point
  * lng2: computed longitude of the destination point
- * azimuth2: computed azimuth at the destination point along the same geodesic
+ * azimuth2: computed azimuth of geodesic at destination point
  */
 function vincenty_direct($lat1, $lng1, $dist, $azimuth1, $a, $b, &$lat2, &$lng2, &$azimuth2) : int
 {
@@ -65,7 +65,7 @@ function vincenty_direct($lat1, $lng1, $dist, $azimuth1, $a, $b, &$lat2, &$lng2,
 
     $epsilon = 1e-12;
     $diff = 1e20;
-    while($diff > $epsilon) {
+    while(abs($diff) > $epsilon) {
 
         $_2_sigma_m = 2 * $sigma_1 + $sigma;
 
@@ -104,6 +104,9 @@ function vincenty_direct($lat1, $lng1, $dist, $azimuth1, $a, $b, &$lat2, &$lng2,
     $lng2 = $lng1 + $L; 
     // azimuth at destination point
     $azimuth2 = atan2($sin_alpha, -sin($U1) * sin($sigma) + cos($U1) * cos($sigma) * cos($azimuth1));
+
+    if($azimuth2 < 0)
+        $azimuth2 += 2 * M_PI;
     
     return GoedeasyError::NoError;
 }
@@ -118,7 +121,7 @@ function vincenty_direct($lat1, $lng1, $dist, $azimuth1, $a, $b, &$lat2, &$lng2,
  * 
  * outputs:
  * length of the geodesic (great circle distance) between these
- * two points, azimuth of the geodesic at the first point, reverse
+ * two points, azimuth of the geodesic at the first point,
  * azimuth of the geodesic at the second point.
  * 
  * lat1: latitude of the first point
@@ -127,12 +130,12 @@ function vincenty_direct($lat1, $lng1, $dist, $azimuth1, $a, $b, &$lat2, &$lng2,
  * lng2: longitude of the destination point
  * a: semi-major axis of the ellipsoid
  * b: semi-minor axis of the ellipsoid
- * azimuth: computed azimuth at the first point towards second point
- * reverse_azimuth: computed reverse azimuth at the destination point towards first point
+ * azimuth: computed azimuth of geodesic at first point
+ * azimuth2: computed azimuth of geodesic at second point
  * dist: computed distance on ellipsoid surface
 */
 
-function vincenty_inverse($lat1, $lng1, $lat2, $lng2, $a, $b, &$azimuth, &$reverse_azimuth, &$dist) : int
+function vincenty_inverse($lat1, $lng1, $lat2, $lng2, $a, $b, &$azimuth, &$azimuth2, &$dist) : int
 {
     if(
         $lat1 > GDS_COMMON_MAX_LATITUDE || $lng1 > GDS_COMMON_MAX_LONGITUDE || 
@@ -146,8 +149,12 @@ function vincenty_inverse($lat1, $lng1, $lat2, $lng2, $a, $b, &$azimuth, &$rever
     $f = ($a - $b) / $a; 
     // reduced latitude of first point  
     $U1 = atan((1-$f) * tan($lat1));
+    $sin_U1 = sin($U1);
+    $cos_U1 = cos($U1);
     // reduced latitude of second point
     $U2 = atan((1-$f) * tan($lat2)); 
+    $sin_U2 = sin($U2);
+    $cos_U2 = cos($U2);
     // longitudinal difference on ellipsoid
     $L = $lng2 - $lng1; 
     // longitudinal difference on auxilliary sphere
@@ -158,18 +165,23 @@ function vincenty_inverse($lat1, $lng1, $lat2, $lng2, $a, $b, &$azimuth, &$rever
     $sin_sigma = .0; 
     $cos_sigma = .0; 
     $sin_alpha = .0;
+    $sin_lambda = .0;
+    $cos_lambda = .0;
 
     $epsilon = 1e-12;
     $diff = 1e20;
-    while($diff > $epsilon)
+    while(abs($diff) > $epsilon)
     {
-        $sin_sigma = sqrt(pow(cos($U2)* sin($lambda),2) + pow(cos($U1) * sin($U2) - sin($U1) * cos($U2) * cos($lambda),2));
-        $cos_sigma = sin($U1) * sin($U2) + cos($U1) * cos($U2) * cos($lambda);
+        $sin_lambda = sin($lambda);
+        $cos_lambda = cos($lambda);
+        $sin_sigma = sqrt(pow($cos_U2* $sin_lambda,2) + pow($cos_U1 * $sin_U2 - $sin_U1 * $cos_U2 * $cos_lambda,2));
+        $cos_sigma = $sin_U1 * $sin_U2 + $cos_U1 * $cos_U2 * $cos_lambda;
+
         $sigma = atan2($sin_sigma, $cos_sigma);
 
-        $sin_alpha = (cos($U1) * cos($U2) * sin($lambda)) / sin($sigma);
-         /** cos(2 * sigma_m) */
-        $cos_2_sigma_m = cos($sigma) - (2 * sin($U1) * sin($U2)) / (1 - pow($sin_alpha, 2));
+        $sin_alpha = ($cos_U1 * $cos_U2 * $sin_lambda) / $sin_sigma;
+        // cos(2 * sigma_m)
+        $cos_2_sigma_m = $cos_sigma - (2 * $sin_U1 * $sin_U2) / (1 - pow($sin_alpha, 2));
         $C = $f / 16 * (1 - pow($sin_alpha, 2)) * (4 + $f * (4 - 3 * (1 - pow($sin_alpha, 2))));
 
         $diff = $lambda;
@@ -212,8 +224,12 @@ function vincenty_inverse($lat1, $lng1, $lat2, $lng2, $a, $b, &$azimuth, &$rever
     );
 
     $dist = $b * $A * ($sigma - $d_sigma);
-    $azimuth = atan2(cos($U2) * sin($lambda), cos($U1) * sin($U2) - sin($U1) * cos($U2) * cos($lambda));
-    $reverse_azimuth = atan2(cos($U1) * sin($lambda), -sin($U1) * cos($U2) + cos($U1) * sin($U2) * cos($lambda));
-    $reverse_azimuth = $reverse_azimuth < M_PI ? $reverse_azimuth + M_PI : M_PI - $reverse_azimuth;
+    $azimuth = atan2($cos_U2 * $sin_lambda, $cos_U1 * $sin_U2 - $sin_U1 * $cos_U2 * $cos_lambda);
+    $azimuth2 = atan2($cos_U1 * $sin_lambda, - $sin_U1 * $cos_U2 + $cos_U1 * $sin_U2 * $cos_lambda);
+
+    if($azimuth < 0)
+        $azimuth += M_PI * 2;
+    if($azimuth2 < 0)
+        $azimuth2 += M_PI * 2;
     return GoedeasyError::NoError;
 }

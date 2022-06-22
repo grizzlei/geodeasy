@@ -14,7 +14,7 @@ $api_lcc_to_geo="";
 <html>
     <title>GeodEasy</title>
     <head>
-    <!-- <link rel="stylesheet" href="../css/style.css"> -->
+    <link rel="stylesheet" href="../css/style.css">
       <!-- Global site tag (gtag.js) - Google Analytics -->
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-ECXWC4T4NV"></script>
       <script>
@@ -25,8 +25,10 @@ $api_lcc_to_geo="";
         gtag('config', 'G-ECXWC4T4NV');
       </script>
     </head>
-<body style="font-family:Helvetica; font-size:12px;">
-
+<!-- <body style="font-family:Helvetica; font-size:12px;"> -->
+<body class="body-index">
+    <div class="container-2">
+        <div style="padding: 25px;">
 <pre>
                        _ _____
    __ _  ___  ___   __| | ____|__ _ ___ _   _
@@ -56,9 +58,11 @@ Geodeasy online tools:<p>
 <hr>
 <h3> API documentation and examples </h3>
 A typical GET request to Geodeasy APIs:
-<pre>
+<p>
+<code>
     https://geodeasy.org/api/v1/destination.php?latitude=35.123&longitude=41.1235&distance=12413&azimuth=22&a=6378137.0&b=6356752.314245
-</pre><br>
+</code>
+<p>
 A typical response body from Geodeasy APIs:
 <pre>
 {
@@ -155,6 +159,6 @@ This is a licence-free software, it can be used by anyone who try to build a
 better world.
 <hr>
 <a href="https://hasankaraman.dev/whoami">hasan karaman (whoami)</a> - <a href="https://hasankaraman.dev">https://hasankaraman.dev</a> - <a href="mailto:hk@hasankaraman.dev">hk@hasankaraman.dev</a> - 2022
-
+</div></div>
     </body>
 </html>

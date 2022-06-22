@@ -59,6 +59,46 @@ content="Find destination point coordinates on ellipsoid given azimuth and dista
                         map.flyTo([data.payload.latitude, data.payload.longitude], 12);
                         var marker = new L.marker([data.payload.latitude, data.payload.longitude]).addTo(map);
                     });
+
+
+                    var azimuth = $("#iAzimuth").val();
+                    var density = 30;
+                    var dist_over_density = $("#iDistance").val() / density;
+                    var new_lat = $("#iLatitude").val(), new_lon = $("#iLongitude").val();
+                    for (i in map._layers) {
+                        if (map._layers[i]._path != undefined) {
+                            try {
+                                map.removeLayer(map._layers[i]);
+                            }
+                            catch (e) {
+                                console.log("problem with " + e + map._layers[i]);
+                            }
+                        }
+                    }
+                    var point_set = [[new_lat, new_lon]];
+
+                    for (var i = 0; i < density; i++) {
+                        $.ajax({
+                            url: "https://geodeasy.org/api/v1/destination.php?latitude=" + new_lat + "&longitude=" + new_lon + "&distance=" +
+                                dist_over_density + "&azimuth=" + azimuth + "&a=" + $("#iSemiMajor").val() + "&b=" + $("#iSemiMinor").val(),
+                            async: false,
+                            data: "",
+                            success: function (data, status) {
+                                new_lat = data.payload.latitude;
+                                new_lon = data.payload.longitude;
+                                azimuth = data.payload.azimuth;
+                                point_set.push(new L.LatLng(new_lat, new_lon));
+                            }
+                        });
+                    }
+                    console.log(point_set);
+                    var pl = new L.polyline(point_set, {
+                        color: 'blue',
+                        weight: 3,
+                        opacity: 0.75,
+                        smoothFactor: 3
+                    });
+                    pl.addTo(map);
                 }
             </script>
             <div class="row">
@@ -113,7 +153,7 @@ content="Find destination point coordinates on ellipsoid given azimuth and dista
                     <input type="number" step="any" name="iLongitude2" id="iLongitude2" class="form-control" readonly>
                 </div>
                 <div class="container" style="width: 33%;">
-                    <label>Azimuth at destination ( &deg; )</label>
+                    <label>Azimuth of geodesic at destination ( &deg; )</label>
                     <input type="number" step="any" name="iAzimuth2" id="iAzimuth2" class="form-control" readonly>
                 </div>
             </div>
